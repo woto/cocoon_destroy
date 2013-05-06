@@ -1,4 +1,5 @@
 <%= form_for(@category) do |f| %>
+
   <% if @category.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
@@ -15,7 +16,20 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+
+  <h4>Nested Posts</h4>
+  <div id="posts">
+    <%= f.fields_for :posts do |post| %>
+      <% render 'post_fields', :f => post %>
+    <% end %>
+
+    <div class="links">
+      <%= link_to_add_association 'add post', f, :posts %>
+    </div>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>
