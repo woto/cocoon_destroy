@@ -1,27 +1,33 @@
 <div class="nested-fields">
 
-  <%= link_to_remove_association "remove post", f %>
+  <% if f.object._destroy %>
+    <%= hidden_field_tag("#{f.object_name}[_destroy]", '1') %>
+  <% else %>
+    <%= link_to_remove_association 'remove', f, :confirm => 'Are you sure?' %>
 
-  <% if f.object.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(f.object.errors.count, "error") %> prohibited this post from being saved:</h2>
+    <% if f.object.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(f.object.errors.count, "error") %> prohibited this post from being saved:</h2>
 
-      <ul>
-      <% f.object.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% f.object.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
     </div>
+
+    <div class="field">
+      <%= f.label :content %><br>
+      <%= f.text_area :content %>
+    </div>
+
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </div>
 
 </div>
